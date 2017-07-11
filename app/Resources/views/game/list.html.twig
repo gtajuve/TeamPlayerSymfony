@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_game_create') }}">Create Team</a>
+    {% endif %}
+    <table>
+
+        <tbody>
+        <tr>
+            <th>Date</th>
+            <th></th>
+            <th>Home</th>
+            <th>Score</th>
+            <th>Away</th>
+
+        </tr>
+        {% for game in games %}
+            <tr>
+                <td>{{ game.playedAt|date('Y-m-d') }}</td>
+                <td></td>
+                <td>{{ game.homeTeam }} </td>
+                {#<td>{{ game.homeNat}} </td>#}
+                <td>{{ game.score }}</td>
+                <td>{{ game.awayTeam }}</td>
+                {#<td>{{ game.awayNat }}</td>#}
+
+
+                {#<td><a href="{{ path("",{'id':team.id}) }}">Show</a></td>#}
+                {#<td><a href="{{ path("",{'id':team.id}) }}">Show Players</a></td>#}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path("admin_game_edit",{'id':game.id}) }}">Edit</a></td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_team_create') }}">Create Team</a>
+    {% endif %}
+    <table>
+
+        <tbody>
+        <tr>
+            <th>Name</th>
+            <th>Country</th>
+
+        </tr>
+        {% for team in teams %}
+            <tr>
+                <td>{{ team.name }}</td>
+                <td><a href="{{ path("show_nation_teams",{'name':team.nation}) }}">{{ team.nation }}</a></td>
+
+                <td><a href="{{ path("show_team_players",{'id':team.id}) }}">Show Players</a></td>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path("admin_team_edit",{'id':team.id}) }}">Edit</a></td>
+                    <td><a href="{{ path("admin_team_delete",{'id':team.id}) }}">Delete</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

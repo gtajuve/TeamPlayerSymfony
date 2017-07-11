@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('admin_player_create') }}">Create Player</a>
+    {% endif %}
+
+    <table>
+
+        <tbody>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Country</th>
+            <th>Position</th>
+            <th>Team</th>
+        </tr>
+        {% for player in players %}
+            <tr>
+                <td>{{ player.number }}</td>
+                <td>{{ player.firstName }} {{ player.lastName }}</td>
+                <td><a href="{{ path("show_nation_players",{'name':player.nation}) }}">{{ player.nation }}</a></td>
+                <td><a href="{{ path("show_position_players",{'pos':player.position}) }}">{{ player.position }}</a></td>
+                <td>{{ player.team }}</td>
+                {#<td><a href="{{ path("",{'id':team.id}) }}">Show</a></td>#}
+                {#<td><a href="{{ path("",{'id':team.id}) }}">Show Players</a></td>#}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td><a href="{{ path("admin_player_edit",{'id':player.id}) }}">Edit</a></td>
+                    <td><a href="{{ path("admin_player_delete",{'id':player.id}) }}">Delete</a></td>
+                {% endif %}
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

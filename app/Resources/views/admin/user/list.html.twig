@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table>
+
+        <tbody>
+        <tr>
+            <th>Email</th>
+
+            <th>Roles</th>
+
+
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.email }}</td>
+                <td></td>
+                <td>{% for role in user.roles %}
+                    {{ role }}
+                    {% endfor %}
+                </td>
+
+
+
+                {#<td><a href="{{ path("",{'id':team.id}) }}">Show</a></td>#}
+                {#<td><a href="{{ path("",{'id':team.id}) }}">Show Players</a></td>#}
+                <td><a href="{{ path("admin_user_edit",{'id':user.id}) }}">Edit</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

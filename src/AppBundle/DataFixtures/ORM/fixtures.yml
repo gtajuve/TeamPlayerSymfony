@@ -1,0 +1,30 @@
+AppBundle\Entity\Nation:
+  nation_{1..10}:
+    name: <nation()>
+
+AppBundle\Entity\Team:
+  team_{1..20}:
+    name: F.C.<name()>
+    nation: '@nation_*'
+
+AppBundle\Entity\Player:
+  player_{1..100}:
+    firstName: <firstName()>
+    lastName: <lastName()>
+    position: <position()>
+    number: <numberBetween(1, 99)>
+    nation: '@nation_*'
+    team: '@team_*'
+
+AppBundle\Entity\Game:
+  game_{1..20}:
+    score: <numberBetween(0, 10)>:<numberBetween(0,10)>
+    homeTeam: '@team_*'
+    awayTeam: '@team_*'
+    playedAt: <dateTimeBetween('-6 months', 'now')>
+
+AppBundle\Entity\User:
+    user_{1..3}:
+        email: gogo<current()>@gmail.com
+        plainPassword: 123
+        roles: ['ROLE_ADMIN']

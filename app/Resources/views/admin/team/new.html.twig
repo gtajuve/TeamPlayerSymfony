@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>New team</h1>
+                {{ form_start(teamForm) }}
+                {{ form_widget(teamForm) }}
+                <button type="submit" class="btn btn-primary">Create</button>
+                {{ form_end(teamForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
