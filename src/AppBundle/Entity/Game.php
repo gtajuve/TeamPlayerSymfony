@@ -8,6 +8,7 @@
 namespace AppBundle\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -45,6 +46,21 @@ class Game
      * @ORM\Column(type="date")
      */
     private $playedAt;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Player",mappedBy="games")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $players;
+
+    /**
+     * Game constructor.
+     *
+     */
+    public function __construct()
+    {
+        $this->players = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -124,4 +140,18 @@ class Game
     {
         $this->awayTeam = $awayTeam;
     }
+    public function __toString()
+    {
+        return $this->getHomeTeam().$this->getScore().$this->getAwayTeam();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPlayers()
+    {
+        return $this->players;
+    }
+
+
 }

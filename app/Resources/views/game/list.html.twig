@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+{{ dump(games[0].homeTeam.nation) }}
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_game_create') }}">Create Team</a>
     {% endif %}
@@ -12,6 +12,7 @@
             <th>Date</th>
             <th></th>
             <th>Home</th>
+            <th></th>
             <th>Score</th>
             <th>Away</th>
 
@@ -21,20 +22,22 @@
                 <td>{{ game.playedAt|date('Y-m-d') }}</td>
                 <td></td>
                 <td>{{ game.homeTeam }} </td>
-                {#<td>{{ game.homeNat}} </td>#}
+                <td>{{ game.homeTeam.nation}} </td>
                 <td>{{ game.score }}</td>
                 <td>{{ game.awayTeam }}</td>
-                {#<td>{{ game.awayNat }}</td>#}
+                <td>{{ game.awayTeam.nation }}</td>
 
 
                 {#<td><a href="{{ path("",{'id':team.id}) }}">Show</a></td>#}
-                {#<td><a href="{{ path("",{'id':team.id}) }}">Show Players</a></td>#}
+                <td><a href="{{ path("roster_list",{'id':game.id}) }}">Show Roster</a></td>
                 {% if is_granted('ROLE_ADMIN') %}
                     <td><a href="{{ path("admin_game_edit",{'id':game.id}) }}">Edit</a></td>
+                    <td><a href="{{ path("admin_roster_edit",{'id':game.id}) }}">Edit Roster</a></td>
                 {% endif %}
 
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
 {% endblock %}

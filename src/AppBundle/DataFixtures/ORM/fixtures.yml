@@ -28,3 +28,10 @@ AppBundle\Entity\User:
         email: gogo<current()>@gmail.com
         plainPassword: 123
         roles: ['ROLE_ADMIN']
+
+AppBundle\Entity\Roster:
+    roster_{1..3}:
+        game: '@game_*'
+        player: '@player_*'
+
+

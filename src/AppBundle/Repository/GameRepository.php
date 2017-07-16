@@ -23,5 +23,13 @@ class GameRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+    /**
+     * @return Game[]
+     */
+    public function findAllOrderByPlayedDateForForm(){
+        return $this->createQueryBuilder("game")
+            ->orderBy('game.playedAt','ASC');
+
+    }
 
 }

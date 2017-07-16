@@ -6,6 +6,7 @@
  * Time: 10:05 PM
  */
 namespace AppBundle\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -46,6 +47,15 @@ class Player
     private $nation;
 
     /**
+     * Player constructor.
+     * @param $games
+     */
+    public function __construct()
+    {
+        $this->games = new ArrayCollection();
+    }
+
+    /**
      * @param mixed $nation
      */
     public function setNation($nation)
@@ -83,6 +93,20 @@ class Player
      * @ORM\JoinColumn(nullable=true)
      */
     private $team;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Game",inversedBy="players")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $games;
+
+    /**
+     * @return mixed
+     */
+    public function getGames()
+    {
+        return $this->games;
+    }
 
     /**
      * @return mixed
@@ -161,5 +185,9 @@ class Player
     public function setTeam(Team $team)
     {
         $this->team = $team;
+    }
+    public function __toString()
+    {
+        return $this->getFirstName()." ".$this->getLastName()." ".$this->getTeam();
     }
 }

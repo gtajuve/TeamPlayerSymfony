@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+    <form action="{{ path('admin_roster_edit',{'id':game.id}) }}" method="post">
+        <label for="">{{ game.homeTeam }}:</label>
+        <select multiple name="homeP[]">
+            {% for player in game.homeTeam.players %}
+            <option value="{{ player.id }}">{{player.lastName }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="password">{{ game.awayTeam }}:</label>
+        <select multiple name="awayP[]">
+            {% for player in game.awayTeam.players %}
+                <option value="{{ player.id }}">{{player.lastName }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Save</button>
+    </form>
+
+{% endblock %}

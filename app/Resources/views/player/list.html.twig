@@ -6,6 +6,9 @@
         <a href="{{ path('admin_player_create') }}">Create Player</a>
     {% endif %}
 
+    <div>
+        Per Page : <a href="{{ path("player_list",{'perPage':5}) }}">5</a> | <a href="{{ path("player_list",{'perPage':10}) }}">10</a> | <a href="{{ path("player_list",{'perPage':20}) }}">20</a>
+    </div>
     <table>
 
         <tbody>
@@ -32,6 +35,27 @@
 
             </tr>
         {% endfor %}
+
         </tbody>
     </table>
+    <table>
+        <tbody>
+        <tr>
+           <td colspan="5"><a href="{{ path("player_list",{"page":0}) }}">First Page </a></td>
+            {% if currentPage > 0 %}
+            <td colspan="5"><a href="{{ path("player_list",{"page":currentPage-1}) }}">Prev </a></td>
+            {% endif %}
+
+            {% for i in 0 .. pages %}
+                <td colspan="5"><a href="{{ path("player_list",{"page":i}) }}">{{ i+1 }} </a></td>
+            {% endfor %}
+            {% if currentPage<pages %}
+                <td colspan="5"><a href="{{ path("player_list",{"page":currentPage+1}) }}">Next </a></td>
+            {% endif %}
+
+            <td colspan="5"><a href="{{ path("player_list",{"page":pages}) }}">Last Page </a></td>
+        </tr>
+        </tbody>
+    </table>
+
 {% endblock %}

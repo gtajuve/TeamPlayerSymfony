@@ -4,7 +4,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "AppBundle\\": "src/AppBundle"
+            "": "src/"
         },
         "classmap": [
             "app/AppKernel.php",
@@ -35,6 +35,8 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^2.3",
         "doctrine/doctrine-migrations-bundle": "^1.2",
+        "jms/serializer-bundle": "^2.0",
+        "knplabs/knp-paginator-bundle": "^2.6",
         "nelmio/alice": "^2.1",
         "sensio/generator-bundle": "^3.0",
         "symfony/phpunit-bridge": "^3.0"

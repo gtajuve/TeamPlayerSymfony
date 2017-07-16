@@ -8,11 +8,14 @@
 namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
  * @ORM\Table(name="team")
+ * @ExclusionPolicy("all")
  */
 
 class Team
@@ -26,6 +29,7 @@ class Team
     /**
      * @Assert\NotBlank()
      * @ORM\Column(type="string")
+     * @Expose()
      */
     private $name;
     /**
@@ -35,6 +39,7 @@ class Team
     /**
      * @ORM\ManyToOne(targetEntity="Nation")
      * @ORM\JoinColumn()
+     * @Expose()
      */
     private $nation;
 

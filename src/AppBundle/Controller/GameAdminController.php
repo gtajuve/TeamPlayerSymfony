@@ -55,4 +55,45 @@ class GameAdminController extends Controller
         return $this->render("admin/game/edit.html.twig",["gameForm"=>$form->createView()]);
 
     }
+    /**
+     * @Route("/game/{id}/roster",name="admin_roster_edit")
+     */
+    public function editRosterAction(Request $request,Game $game)
+    {
+        if($request->getMethod()=="POST"){
+            $parameters=$request->request->all();
+            if(key_exists("homeP",$parameters)){
+                $this->proceedSql($game->getId(),$parameters["homeP"]);
+            }
+            if(key_exists("awayP",$parameters)){
+                $this->proceedSql($game->getId(),$parameters["awayP"]);
+            }
+
+
+            return $this->redirectToRoute('roster_list',["id"=>$game->getId()]);
+        }
+
+        return $this->render("admin/game/roster.html.twig",["game"=>$game]);
+
+
+    }
+
+    private function proceedSql($id, $playerIds)
+    {
+        foreach ( $playerIds as $playerId) {
+            $conn=$this->getDoctrine()->getConnection();
+            $sql="INSERT INTO player_game (`player_id`, `game_id`) VALUES (:playerId,:teamId) ";
+            $stmt=$conn->prepare($sql);
+            $stmt->bindParam(":playerId",$playerId);
+            $stmt->bindParam(":teamId",$id);
+
+
+//            $values="( ".$playerId.",".$id." )";
+//            $sql.=$values;
+
+            $stmt->execute();
+        }
+
+    }
+
 }

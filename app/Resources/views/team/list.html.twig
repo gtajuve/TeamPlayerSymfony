@@ -5,15 +5,28 @@
     {% if is_granted('ROLE_ADMIN') %}
         <a href="{{ path('admin_team_create') }}">Create Team</a>
     {% endif %}
+    <div class="count">
+        {{ pagination.getTotalItemCount }}
+    </div>
+    <div>
+        Per Page : <a href="{{ path("team_list",{'perPage':3}) }}">3</a> | <a href="{{ path("team_list",{'perPage':5}) }}">5</a> | <a href="{{ path("team_list",{'perPage':8}) }}">8</a>
+    </div>
     <table>
 
         <tbody>
+        <tr>
+            {# sorting of properties based on query components #}
+
+            <th{% if pagination.isSorted('a.name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'a.name') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Country', 'a.nation') }}</th>
+        </tr>
+
         <tr>
             <th>Name</th>
             <th>Country</th>
 
         </tr>
-        {% for team in teams %}
+        {% for team in pagination %}
             <tr>
                 <td>{{ team.name }}</td>
                 <td><a href="{{ path("show_nation_teams",{'name':team.nation}) }}">{{ team.nation }}</a></td>
@@ -28,4 +41,7 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 {% endblock %}

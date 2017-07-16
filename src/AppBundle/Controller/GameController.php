@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Game;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -19,11 +20,18 @@ class GameController extends Controller
     {
         $em=$this->getDoctrine()->getManager();
         $games=$em->getRepository("AppBundle:Game")->findAllOrderByPlayedDate();
-//        foreach($games as $game){
-//            $game["homeNat"]=$game->getHomeTeam()->getNation();
-//            $game["awayNat"]=$game->getAwayTeam()->getNation();
-//        }
+//
 
         return $this->render('game/list.html.twig', array('games' => $games));
+    }
+    /**
+     * @Route("/game/{id}/players",name="roster_list")
+     */
+    public function showPlayersAction(Game $game)
+    {
+        $players=$game->getPlayers();
+
+
+        return $this->render('player/list.html.twig', array('players' => $players));
     }
 }

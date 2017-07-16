@@ -25,6 +25,33 @@ class PlayerRepository extends EntityRepository
             ->getQuery()
             ->execute();
     }
+    public function getPlayerCount(){
+        $queryBuilder=$this->createQueryBuilder("player");
+        return $queryBuilder
+            ->select($queryBuilder->expr()->count("player"))
+            ->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param $current_page 0 ..n
+     * @param $num_result  10
+     * @return \AppBundle\Entity\Player[]
+     */
+    public function findAllPaginated($current_page,$num_result){
+        return $this->createQueryBuilder("player")
+            ->setFirstResult($current_page*$num_result)
+            ->setMaxResults($num_result)
+            ->orderBy('player.lastName','ASC')
+            ->getQuery()
+            ->execute();
+    }
+    /**
+     * @return Player[]
+     */
+    public function findAllOrderByLastNameForForm(){
+        return $this->createQueryBuilder("player")
+            ->orderBy('player.lastName','ASC');
+    }
 
     /**
      * @param Team $team
